@@ -4,7 +4,7 @@ import { useHistory, Link } from 'react-router-dom';
 import {AuthContext} from "../context/AuthContext";
 
 function NavBar() {
-  const {logout, authorized} = useContext(AuthContext)
+  const {logout, isAuth} = useContext(AuthContext);
   const history = useHistory();
 
   return (
@@ -17,7 +17,7 @@ function NavBar() {
             </h3>
           </span>
         </Link>
-        {authorized ?
+        {isAuth ?
             <button type="button"
                     onClick={logout}
             >logout

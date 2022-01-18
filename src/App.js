@@ -9,7 +9,8 @@ import './App.css';
 import {AuthContext} from "./context/AuthContext";
 
 function App() {
-  const {authorized} = useContext(AuthContext)
+  const {isAuth} = useContext(AuthContext);
+  console.log({isAuth});
   return (
     <>
       <NavBar />
@@ -19,7 +20,7 @@ function App() {
             <Home />
           </Route>
           <Route path="/profile">
-            {authorized ? <Profile /> : <Redirect to="/"/>}
+            {isAuth ? <Profile /> : <Redirect to="/"/>}
 
           </Route>
           <Route exact path="/signin">

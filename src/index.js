@@ -10,7 +10,8 @@ ReactDOM.render(
     <React.StrictMode>
         <Router>
             <AuthContextProvider>
-                <App/>D</AuthContextProvider>
+                <App/>
+            </AuthContextProvider>
         </Router>
     </React.StrictMode>,
     document.getElementById('root')
