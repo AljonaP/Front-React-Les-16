@@ -24,7 +24,7 @@ function Profile() {
             }
         }
         fetchProfileData();
-    }, [])
+    }, []);
 
 
   return (
@@ -36,8 +36,8 @@ function Profile() {
         <p><strong>Email:</strong>{user.email}</p>
       </section>
       <section>
-        <h2>Strikt geheime profiel-content</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab alias cum debitis dolor dolore fuga id molestias qui quo unde?</p>
+        <h2>{profileData.title}</h2>
+        <p>{profileData.content}</p>
       </section>
       <p>Terug naar de <Link to="/">Homepagina</Link></p>
     </>

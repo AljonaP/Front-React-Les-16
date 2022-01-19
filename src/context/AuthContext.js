@@ -1,4 +1,4 @@
-import React, {createContext, useState} from 'react';
+import React, {createContext, useEffect, useState} from 'react';
 import {useHistory} from "react-router-dom";
 import jwt_decode from 'jwt-decode';
 import axios from "axios";
@@ -23,7 +23,22 @@ function AuthContextProvider({children}) {
         // console.log(decode.sub);
         getUserData(decode.sub,JWT, '/profile');
     }
+    useEffect(() => {
+        console.log('context wordt gerefresht!')
+        const token = localStorage.getItem('token')
+        if (token) {
+            const decode = jwt_decode(token)
+            getUserData(decode.sub, token)
+        } else {
+            toggleIsAuth({
+                isAuth: false,
+                user: null,
+                status: 'done'
+            })
+        }
 
+
+    }, []);
     function logout(){
            localStorage.clear();
         console.log("Gebruiker is uitgelogd!");
@@ -35,7 +50,7 @@ function AuthContextProvider({children}) {
         history.push('/');
     }
 
-    async function getUserData(id, token, redirect){
+    async function getUserData(id, token){
 
         try {
             const result = await axios.get(`http://localhost:3000/600/users/${id}`,
@@ -50,11 +65,12 @@ function AuthContextProvider({children}) {
                     email: result.data.email,
                     username: result.data.username,
                     id: result.data.id,
-                }
+                },
+                status: 'done'
             });
 
 
-            history.push(redirect);
+            history.push('/profile');
         } catch (e) {
             console.error(e)
         }
@@ -70,7 +86,7 @@ function AuthContextProvider({children}) {
     return (
 
             <AuthContext.Provider value={ContextData}>
-                {children}
+                {isAuth.status === 'done' ? children : <p>Loading...</p>}
             </AuthContext.Provider>
     );
 }
